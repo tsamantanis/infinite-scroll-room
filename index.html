@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="body">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=0.7, user-scalable=no">
+        <title>Infinite Scroll Room</title>
+        <link rel="stylesheet" href="styles.css">
+        <script type="text/javascript">
+            window.onload = function() {
+                const rectangles = document.getElementsByClassName('rect')
+                scrollListener = (event) => {
+                    event.preventDefault()
+                    const scrollProportion = (window.pageYOffset / window.innerHeight) % body.scrollHeight
+                    const diff = 0.35;
+                    for (let i = 0; i < rectangles.length; i++) {
+                        const rect = rectangles[i]
+                        let scaleSize = 0.2 + (i * diff) + scrollProportion
+                        scaleSize = scaleSize > 1 ? scaleSize % 1.0001 : scaleSize
+                        rect.style.transform = `scale(${scaleSize})`
+                    };
+                }
+                document.addEventListener('scroll', scrollListener, {passive: true});
+            }
+        </script>
+    </head>
+    <div id="container">
+        <div id="scene" class="scene">
+            <div id="rect" class="rect rect-1"></div>
+            <div id="rect" class="rect rect-2"></div>
+            <div id="rect" class="rect rect-3"></div>
+        </div>
+    </div>
+</html>
